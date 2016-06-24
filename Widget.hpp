@@ -77,7 +77,13 @@ public:
 		}
 
 		case Qt::RightButton:
-			this->field.addBall(event->localPos().x() - Ball::size / 2, event->localPos().y() - Ball::size / 2);
+			try{
+				this->field.addBall(event->localPos().x() - Ball::size / 2, event->localPos().y() - Ball::size / 2);
+			}
+			catch(std::runtime_error &){
+
+			}
+
 			break;
 
 		default:

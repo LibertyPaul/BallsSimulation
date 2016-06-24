@@ -19,6 +19,7 @@ public:
 	double getY() const;
 	void setY(const double y);
 	static double calcDistance(const double x1, const double y1, const double x2, const double y2);
+	static double calcAngle(const double fromX, const double fromY, const double toX, const double toY);
 	double distance(const Ball &o) const;
 	void addForce(const double xPos, const double yPos);
 	void drag(const double xDiff, const double yDiff);
@@ -28,7 +29,6 @@ public:
 private:
 	std::pair<double, double> calculateForce() const;
 	double F(const double r);
-	static double calcAngle(const double fromX, const double fromY, const double toX, const double toY);
 };
 
 #endif // BALL_HPP

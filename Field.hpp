@@ -9,6 +9,7 @@
 #include <chrono>
 #include <random>
 #include <algorithm>
+#include <stdexcept>
 
 class Field{
 	const double xMax, yMax;
@@ -29,11 +30,6 @@ public:
 
 	~Field(){}
 
-	void addBall(const double xPos, const double yPos){
-		std::lock_guard<std::mutex> lg(this->ballsAccess);
-		this->balls.emplace_back(xPos, yPos);
-	}
-
 private:
 	std::vector<Ball>::const_iterator findBallByPosition(const double xPos, const double yPos) const{
 		return std::find_if(this->balls.cbegin(), this->balls.cend(), [xPos, yPos](const Ball &ball){
@@ -48,6 +44,19 @@ private:
 	}
 
 public:
+	void addBall(double xPos, double yPos){
+		std::lock_guard<std::mutex> lg(this->ballsAccess);
+
+		const std::vector<Ball>::const_iterator ball = findBallByPosition(xPos, yPos);
+		if(ball != this->balls.cend()){
+			const double angle = Ball::calcAngle(ball->getX(), ball->getY(), xPos, yPos);
+			xPos = ball->getX() + std::cos(angle) * Ball::size;
+			yPos = ball->getY() + std::sin(angle) * Ball::size;
+		}
+
+		this->balls.emplace_back(xPos, yPos);
+	}
+
 	void removeBall(const double xPos, const double yPos){
 		std::lock_guard<std::mutex> lg(this->ballsAccess);
 
