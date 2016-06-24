@@ -7,4 +7,4 @@ Create ball - Right Mouse
 Remove ball - Left Mouse
 Drag ball - hold Left Mouse and drag
 
-![BallsSimulation]([https://i.imgur.com/jTX3ZLX.png)
+![BallsSimulation](https://i.imgur.com/jTX3ZLX.png)
